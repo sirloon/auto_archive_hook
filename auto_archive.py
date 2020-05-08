@@ -23,4 +23,13 @@ def auto_archive(build_config_name, days=5):
     if not at_least_one:
         logger.info("Nothing to archive")
 
+# schedule auto-archive every day at noon
 schedule("0 12 * * *",auto_archive,"covid19")     
+
+# expose command as an API endpoint
+# $ curl -XPUT localhost:7080/auto_archive/covid19
+expose(
+    endpoint_name="auto_archive",
+    command_name="auto_archive",
+    method="put"
+)
